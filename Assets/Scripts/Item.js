@@ -11,7 +11,15 @@ function OnTriggerEnter2D (other: Collider2D) {
 
 	if (rocketLauncher) {
 		rocketLauncher.Add(rockets);
+		PlaySound();
 	}
 
-	Destroy(gameObject);
+
+	Destroy(gameObject, 0.419);
+	// gameObject.SetActive(false);
+}
+
+function PlaySound() {
+	var audio = gameObject.GetComponent.<AudioSource>();
+	audio.Play();
 }
