@@ -6,8 +6,7 @@ public var speed: float = 0.1f;
 
 private var targetPosition: GameObject;
 private var rigidBody: Rigidbody2D;
-private var rightDirection: float = 180;
-private var leftDirection: float = 0;
+private var flipRotation: Vector3 = Vector3(0, 180, 0);
 
 function Start () {
 	rigidBody = GetComponent.<Rigidbody2D>();
@@ -29,25 +28,30 @@ function OnTriggerEnter2D(other: Collider2D) {
 	} else {
 		targetPosition = waypoint1;
 	}
-	Rotate();
+	Flip();
 }
 
-function Rotate() {
-	var currentRotation: Quaternion = transform.rotation;
-	var yRotation: float;
+function Flip() {
+	// Langer Weg:
+	//
+	// var currentRotation: Quaternion = transform.rotation;
+	// var yRotation: float;
+	//
+	// if (currentRotation.y == 0) {
+	// 	yRotation = rightDirection;
+	// } else {
+	// 	yRotation = leftDirection;
+	// }
+	//
+	// var newRotation: Quaternion = Quaternion(
+	// 	currentRotation.x,
+	// 	yRotation,
+	// 	currentRotation.z,
+	// 	currentRotation.w
+	// );
+	//
+	// transform.rotation = newRotation;
 
-	if (currentRotation.y == 0) {
-		yRotation = rightDirection;
-	} else {
-		yRotation = leftDirection;
-	}
-
-	var newRotation: Quaternion = Quaternion(
-		currentRotation.x,
-		yRotation,
-		currentRotation.z,
-		currentRotation.w
-	);
-
-	transform.rotation = newRotation;
+	// Kurzer Weg:
+	transform.Rotate(flipRotation);
 }

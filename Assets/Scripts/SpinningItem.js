@@ -7,7 +7,7 @@ function Start () {
 }
 
 function Update () {
-	var rotation = Vector3.up * speed;
+	var rotation = Vector3.up * speed * Time.deltaTime;
 
 	transform.Rotate(rotation);
 }
