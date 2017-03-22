@@ -18,12 +18,35 @@ function Remove(numberOfRockets: int) {
 function Shoot() {
 	var rocketInstance: GameObject = Instantiate(rocket);
 	rocketInstance.transform.position = gameObject.transform.position;
+	rocketInstance.transform.Rotate(GetPlayerOrientation());
 
-	var rocketRigidbody: Rigidbody2D = rocketInstance.GetComponent. < Rigidbody2D > ();
-	var force: Vector2 = Vector2.right * speed * Time.deltaTime;
+	var rocketRigidbody: Rigidbody2D = rocketInstance.GetComponent.<Rigidbody2D>();
+	var force = GetRocketForce();
+
 	rocketRigidbody.AddForce(force, ForceMode2D.Impulse);
-	lastShot = Time.fixedTime;
+	PlayRocketSound(rocketInstance);
 	Remove(1);
+	Destroy(rocketInstance, 2);
+
+	lastShot = Time.fixedTime;
+}
+
+function GetRocketForce() {
+	var force: Vector2 = GetPlayerOrientation();
+	return force * speed * Time.deltaTime;
+}
+
+function GetPlayerOrientation() {
+	var xScale: float = gameObject.transform.localScale.x;
+	if (xScale > 0) {
+		return Vector2.right;
+	}
+
+	return Vector2.left;
+}
+
+function PlayRocketSound(rocketInstance: GameObject) {
+	rocketInstance.GetComponent.<AudioSource>().Play();
 }
 
 function IsAllowedToShoot() {
