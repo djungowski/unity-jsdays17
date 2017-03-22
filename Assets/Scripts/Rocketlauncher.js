@@ -4,21 +4,30 @@ public var rockets: int = 0;
 public var rocket: GameObject;
 public var speed: float = 100.0f;
 public var launchEvery: float = 0.5f;
+public var hudText: UI.Text;
 
 private var lastShot: float;
 
 function Add(numberOfRockets: int) {
 	rockets += numberOfRockets;
+	UpdateHUD();
 }
 
 function Remove(numberOfRockets: int) {
 	rockets -= numberOfRockets;
+	UpdateHUD();
+}
+
+function UpdateHUD() {
+	hudText.text = rockets.ToString();
 }
 
 function Shoot() {
-	var rocketInstance: GameObject = Instantiate(rocket);
-	rocketInstance.transform.position = gameObject.transform.position;
-	rocketInstance.transform.Rotate(GetPlayerOrientation());
+	var rocketInstance: GameObject = Instantiate(
+		rocket,
+		gameObject.transform.position,
+		GetRocketRotation()
+	);
 
 	var rocketRigidbody: Rigidbody2D = rocketInstance.GetComponent.<Rigidbody2D>();
 	var force = GetRocketForce();
@@ -29,6 +38,14 @@ function Shoot() {
 	Destroy(rocketInstance, 2);
 
 	lastShot = Time.fixedTime;
+}
+
+function GetRocketRotation() {
+	var rocketYRotation = 0;
+	if (GetPlayerOrientation() == Vector2.left) {
+		rocketYRotation = 180;
+	}
+	return Quaternion(0, rocketYRotation, 0, 0);
 }
 
 function GetRocketForce() {

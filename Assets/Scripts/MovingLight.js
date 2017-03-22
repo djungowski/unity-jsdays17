@@ -9,7 +9,11 @@ function Start () {
 }
 
 function Update () {
-	var yRotation: float = speed * Time.deltaTime;;
+	Swing(gameObject);
+}
+
+function Swing(light: GameObject) {
+	var yRotation: float = speed * Time.deltaTime;
 
 	var swing: Vector2;
 	if (movesRight) {
@@ -18,9 +22,8 @@ function Update () {
 		swing = Vector2(0, -yRotation);
 	}
 
-	transform.Rotate(swing);
+	light.transform.Rotate(swing);
 
-	Debug.Log(transform.rotation);
 	if (transform.rotation.y >= maxSwing) {
 		movesRight = false;
 	}

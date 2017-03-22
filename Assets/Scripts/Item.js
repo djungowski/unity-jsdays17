@@ -1,10 +1,7 @@
 ﻿#pragma strict
 
 public var rockets: int = 5;
-
-function Start () {
-	
-}
+public var collectSound: AudioClip;
 
 function OnTriggerEnter2D (other: Collider2D) {
 	var rocketLauncher: Rocketlauncher = other.gameObject.GetComponent.<Rocketlauncher>();
@@ -14,12 +11,11 @@ function OnTriggerEnter2D (other: Collider2D) {
 		PlaySound();
 	}
 
-
-	Destroy(gameObject, 0.419);
-	// gameObject.SetActive(false);
+	gameObject.SetActive(false);
 }
 
 function PlaySound() {
-	var audio = gameObject.GetComponent.<AudioSource>();
-	audio.Play();
+	// var audio = gameObject.GetComponent.<AudioSource>();
+	// audio.Play();
+	AudioSource.PlayClipAtPoint(collectSound, Camera.main.transform.position);
 }
